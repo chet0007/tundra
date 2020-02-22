@@ -68,7 +68,7 @@ const app = {
     cardDiv.appendChild(header)
     cardDiv.appendChild(imgContent)
     cardDiv.appendChild(pContent)
-    console.log(cardDiv)
+    // console.log(cardDiv)
 
     let person = app.profiles[0];
     let firstName = person.first
@@ -91,7 +91,7 @@ const app = {
 
   left: function(ev){
     let cardInfo = ev.currentTarget
-    console.log(cardInfo)
+    // console.log(cardInfo)
     cardInfo.classList.remove('active')
     cardInfo.classList.add('goleft')
     console.log(app.profiles)
@@ -104,7 +104,7 @@ const app = {
 
   right: function(ev){
     let cardInfo = ev.currentTarget
-    console.log(cardInfo)
+    // console.log(cardInfo)
     cardInfo.classList.remove('active')
     cardInfo.classList.add('goright')
     console.log(app.profiles)
@@ -119,54 +119,51 @@ const app = {
   createList: function(ev){
     prof = app.profiles[0]
     // console.log(prof)
-   
     let str = JSON.stringify(prof)
     sessionStorage.setItem("cardProfile", str)
     let crdProf = sessionStorage.getItem("cardProfile")
-    console.log(crdProf)
+    savedCard = JSON.parse(crdProf)
+    console.log(savedCard)
      
     //to delete use li.innerhtml=
-     
     //creating the list item
     let ul = document.querySelector('.list-view')
-      
     let li = document.createElement('li')
-    li.setAttribute("class", 'list-item has-reveal-left')
+    li.setAttribute("class", 'list-item')
     ul.appendChild(li)
-    let divOne = document.createElement('div')
-    divOne.setAttribute("class", 'reveal-left')
-    let icon = document.createElement('i')
-    icon.setAttribute("class", 'icon delete')
-    divOne.appendChild(icon)
-
+    
     let divTwo = document.createElement('div')
     divTwo.setAttribute("class", 'list-text')
+    let firstN = savedCard.first
+    let lastN = savedCard.last
+    divTwo.textContent = firstN + " " + lastN
 
     let divThree = document.createElement('div')
-    divThree.setAttribute("class", 'action-right')
+    divThree.setAttribute("class", 'action-left')
     let avatar = document.createElement('img')
     avatar.setAttribute("src", '')
     avatar.setAttribute("alt", 'happy')
     avatar.setAttribute("class", 'avatar')
+    avatar.src = app.path + savedCard.avatar
     divThree.appendChild(avatar)
-    li.appendChild(divOne)
+
+    let divOne = document.createElement('div')
+    divOne.setAttribute("class", 'action-right')
+    let icon = document.createElement('i')
+    icon.setAttribute("class", 'icon delete')
+
+    icon.addEventListener('click', function(ev){
+      document.querySelector('.list-view').innerHTML=""
+      
+    })
+    divOne.appendChild(icon)
+    
+
     li.appendChild(divTwo)
     li.appendChild(divThree)
+    li.appendChild(divOne)
 
-    app.profiles.forEach((crdProf) => {
-      let firstN = crdProf.first
-      let lastN = crdProf.last
-      let textDiv = document.querySelector('.list-text')
-      textDiv.textContent = firstN + " " + lastN
-      
-      let imG = document.querySelector('.avatar')
-      imG.src = app.path + crdProf.avatar
-      
-      // console.log(ul)
-      console.log(textDiv)
-    })
-   
-
+    // app.profiles.forEach((li) => {  })      
   },
 
   spliceCall: function(){
@@ -175,7 +172,6 @@ const app = {
       app.fetchCall()
     }
   }
-
 };
 
 document.addEventListener("DOMContentLoaded", app.init);
