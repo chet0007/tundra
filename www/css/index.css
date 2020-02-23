@@ -160,7 +160,19 @@
     overflow-x: hidden;
     min-height: 100vh;
     width: 100vw; }
-  
+    
+
+
+
+  .hideSwipe {
+    display: none;
+  }
+
+  .showSwipe {
+    display: block;
+    padding-top:150px;
+    
+  }
   header {
     padding: 1rem 2rem; }
   
@@ -178,6 +190,7 @@
     border-bottom: 2ps solid #75d7f0;
     padding: 1rem 4rem;
     font-size: 1rem; }
+  
   
   blockquote::after {
     content: '\e244';

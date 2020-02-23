@@ -3,6 +3,7 @@ const app = {
   globalStart: false,
   profiles: [],
   path: null,
+  savedProfiles: [],
 
   init: () =>{
     app.fetchCall()
@@ -96,8 +97,13 @@ const app = {
     cardInfo.classList.add('goleft')
     console.log(app.profiles)
     app.spliceCall()
+    document.getElementById("negative-swipe").classList.remove('hideSwipe');
+    document.getElementById("negative-swipe").classList.add('showSwipe');
+
     setTimeout((function () {
       this.parentElement.removeChild(this)
+      document.getElementById("negative-swipe").classList.remove('showSwipe');
+      document.getElementById("negative-swipe").classList.add('hideSwipe');
       app.buildCard()
     }).bind(ev.currentTarget), 500)    
   },
@@ -110,8 +116,12 @@ const app = {
     console.log(app.profiles)
     app.createList(ev)
     app.spliceCall()
+    document.getElementById("positive-swipe").classList.remove('hideSwipe');
+    document.getElementById("positive-swipe").classList.add('showSwipe');
     setTimeout((function () {
       this.parentElement.removeChild(this)
+      document.getElementById("positive-swipe").classList.remove('showSwipe');
+      document.getElementById("positive-swipe").classList.add('hideSwipe');
       app.buildCard()
     }).bind(ev.currentTarget), 500)
   },
@@ -130,6 +140,7 @@ const app = {
     let ul = document.querySelector('.list-view')
     let li = document.createElement('li')
     li.setAttribute("class", 'list-item')
+    li.setAttribute("id", savedCard.id)
     ul.appendChild(li)
     
     let divTwo = document.createElement('div')
@@ -152,18 +163,23 @@ const app = {
     let icon = document.createElement('i')
     icon.setAttribute("class", 'icon delete')
 
-    icon.addEventListener('click', function(ev){
-      document.querySelector('.list-view').innerHTML=""
-      
-    })
     divOne.appendChild(icon)
     
-
     li.appendChild(divTwo)
     li.appendChild(divThree)
     li.appendChild(divOne)
 
-    // app.profiles.forEach((li) => {  })      
+  
+    icon.addEventListener('click', function(ev){
+      let elementId = ev.currentTarget.parentElement.parentElement.getAttribute('id')
+      app.removeElement(elementId)
+    })     
+  },
+
+  removeElement: function(elementId) {
+    // Removes an element from the document
+    let element = document.getElementById(elementId)
+    element.parentNode.removeChild(element)
   },
 
   spliceCall: function(){
@@ -175,50 +191,3 @@ const app = {
 };
 
 document.addEventListener("DOMContentLoaded", app.init);
-
-
-
-//////////////////////////////////////////////////////////////////
-/////////////////////88888888888888888888888//////////////////////
-/////////////////////////888888----888888/////////////////////////
-/////////////////////88888888888888888888888//////////////////////
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   let second = document.querySelector(".list-item:nth-of-type(2)")
-//   let secondTinyShell = new tinyshell(second);
-//   secondTinyShell.addEventListener("revealleft", one);
-
-//   let third = document.querySelector('.list-item:nth-child(3)');
-//   let thirdTinyShell = new tinyshell(third);
-//   thirdTinyShell.addEventListener('tap', one);
-
-//   let fourth = document.querySelector('.list-item:nth-child(4)');
-//   let fourthTinyShell = new tinyshell(fourth);
-//   fourthTinyShell.addEventListener('swipeleft', left);
-//   fourthTinyShell.addEventListener('swiperight', right);
-// });
-
-// function one(ev) {
-//   console.log("function one called by event ", ev);
-//   let p = document.querySelector('.content p').textContent = JSON.stringify(ev, '\t', 2);
-// }
-
-// function left(ev) {
-//   //swiped left... add the class 'goleft' to the element
-//   let li = ev.currentTarget;
-//   console.log(li);
-//   li.classList.add('goleft');
-//   setTimeout((function () {
-//     this.parentElement.removeChild(this);
-//   }).bind(ev.currentTarget), 500);
-// }
-
-// function right(ev) {
-//   //swiped left... add the class 'goleft' to the element
-//   let li = ev.currentTarget;
-//   console.log(li);
-//   li.classList.add('goright');
-//   setTimeout((function () {
-//     this.parentElement.removeChild(this);
-//   }).bind(ev.currentTarget), 500);
-// }
