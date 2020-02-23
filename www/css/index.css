@@ -170,8 +170,9 @@
 
   .showSwipe {
     display: block;
-    padding-top:250px;
-    padding-left: 150px;
+    padding-top:50%;
+    padding-left:33%;
+    font-size: 2rem;
     
   }
   header {
