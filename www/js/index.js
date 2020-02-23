@@ -10,8 +10,6 @@ const app = {
 
     //navigation
     document.querySelectorAll('.tab').forEach((btn)=>{
-      // let tsBtn = new tinyshell(btn)
-      // tsBtn.addEventListener('tap', app.nav)
       btn.addEventListener('click', app.nav)
     })   
   },
@@ -135,7 +133,6 @@ const app = {
     savedCard = JSON.parse(crdProf)
     console.log(savedCard)
      
-    //to delete use li.innerhtml=
     //creating the list item
     let ul = document.querySelector('.list-view')
     let li = document.createElement('li')
@@ -190,4 +187,4 @@ const app = {
   }
 };
 
-document.addEventListener("DOMContentLoaded", app.init);
+document.addEventListener("DOMContentLoaded", app.init)
